@@ -1,22 +1,14 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const { chats } = require("./data/data");
-const colors = require("colors");
-const connectDB = require('./config/db');
-const userRoutes = require('./routes/userRoutes');
+const http = require('http');
+const express = require('express')
+const cors = require('cors')
+const socketIO = require('socket.io')
 
 const app = express();
-const PORT = process.env.PORT || 5000
 
-dotenv.config();
-connectDB();
+const server = http.createServer(app);
 
-app.use(express.json())
+const io = socketIO(server);
 
-
-app.get('/',(req,res)=>{
-    res.send("API is Running")
-});
-
-app.use('/api/user', userRoutes)
-app.listen(PORT,console.log(`Server started on PORT ${PORT}`.yellow.bold));
+server.listen(port, () => {
+    console.log(`Server is working on ${port}`);
+})
